@@ -1,0 +1,66 @@
+{
+  "name": "evolution-js",
+  "version": "1.0.0",
+  "description": "Pure JavaScript Evolution library for node.js and browsers.",
+  "browser": {
+    "ws": false,
+    "crypto": false
+  },
+  "scripts": {
+    "test": "SET BABEL_ENV=test & mocha --compilers js:babel-register --recursive",
+    "test:chain": "SET BABEL_ENV=test & mocha --compilers js:babel-register ./test/chain --recursive",
+    "test:ecc": "SET BABEL_ENV=test & mocha --compilers js:babel-register ./test/ecc --recursive",
+    "test:serializer": "SET BABEL_ENV=test & mocha --compilers js:babel-register ./test/serializer --recursive",
+    "test:watch": "npm test -- --watch",
+    "clean": "dir",
+    "prebuild": "npm run clean",
+    "build": "SET BABEL_ENV=cjs & babel lib -d dist",
+    "build-es": "SET BABEL_ENV=es & babel lib -d es",
+    "postbuild": "npm run build-es",
+    "build:watch": "babel lib -d dist --watch",
+    "prebrowserify": "rm -rf ./build/*",
+    "browserify": "browserify --full-paths dist/browser.js --standalone evolution_js -o build/evolution-js.js -d",
+    "postbrowserify": "uglifyjs --compress --mangle --sequences --drop_console --output build/evolution-js.min.js -- build/evolution-js.js",
+    "prepublish": "npm run build"
+  },
+  "author": "Sigve Kvalsvik <evolutionblocks@gmail.com> (https://github.com/svk31)",
+  "contributors": [
+    "James Calfee <james@jcalfee.info> (https://github.com/jcalfee/)",
+    "Daniel Larimer <dan@cryptonomex.com> (https://github.com/bytemaster/)",
+    "Valentine Zavgorodnev <valentine.zavgorodnev@gmail.com> (https://github.com/valzav/)"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">= 6.0.0"
+  },
+  "main": "./dist/index.js",
+  "jsnext:main": "./es/index.js",
+  "dependencies": {
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-stage-1": "^6.16.0",
+    "bigi": "^1.4.1",
+    "evolution-ws": "./../evolution-ws",
+    "bs58": "^3.0.0",
+    "bytebuffer": "^5.0.0",
+    "create-hash": "^1.1.2",
+    "create-hmac": "^1.1.4",
+    "crypto-js": "^3.1.9-1",
+    "deep-equal": "^1.0.1",
+    "ecurve": "^1.0.2",
+    "event-emitter": "^0.3.4",
+    "immutable": "^3.7.6",
+    "secure-random": "^1.1.1"
+  },
+  "devDependencies": {
+    "assert": "^1.3.0",
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.21.0",
+    "babel-eslint": "^7.1.1",
+    "browserify": "^13.1.0",
+    "esdoc": "^0.4.3",
+    "eslint": "^3.14.1",
+    "mocha": "^3.2.0",
+    "uglify-js": "^3.0.15"
+  }
+}
